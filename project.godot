@@ -10,10 +10,33 @@ config_version=5
 
 [application]
 
-config/name="GEDE project1"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/name="GEDE project 1"
+run/main_scene="res://Scenes/Levels/Level 1.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
-project/assembly_name="GEDE project1"
+project/assembly_name="3D Action RPG Starter Project"
+
+[file_customization]
+
+folder_colors={
+"res://Assets/": "red",
+"res://Scenes/": "orange",
+"res://Scripts/": "yellow"
+}
+
+[filesystem]
+
+import/fbx/enabled=false
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
