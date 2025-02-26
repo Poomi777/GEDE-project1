@@ -277,7 +277,7 @@ skeleton = NodePath("")
 [node name="StaticBody3D" type="StaticBody3D" parent="wall_arched"]
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="wall_arched/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0134153, 0.0199037, -0.00627899)
 shape = SubResource("ConcavePolygonShape3D_4mflf")
 
 [node name="wall_doorway" type="MeshInstance3D" parent="."]
@@ -288,7 +288,7 @@ skeleton = NodePath("")
 [node name="StaticBody3D" type="StaticBody3D" parent="wall_doorway"]
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="wall_doorway/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00536537, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_kyg1n")
 
 [node name="wall_corner" type="MeshInstance3D" parent="."]
