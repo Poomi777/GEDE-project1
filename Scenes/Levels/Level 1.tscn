@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnvxtyc3jv8fi"]
+[gd_scene load_steps=6 format=3 uid="uid://cnvxtyc3jv8fi"]
 
 [ext_resource type="MeshLibrary" uid="uid://ciqs7pm16vrec" path="res://Scenes/Levels/library.tres" id="1_bqnr6"]
+[ext_resource type="PackedScene" uid="uid://dxs7kkm7gvtbs" path="res://Scenes/Player/player.tscn" id="2_d1tu3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i1ox3"]
 
@@ -30,3 +31,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.68486, 3.43061, -0.969296)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wh52w")
+
+[node name="player" parent="." instance=ExtResource("2_d1tu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.409082, 1.05, -12.6215)
