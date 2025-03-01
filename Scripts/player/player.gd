@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@onready var animation_tree = get_node("AnimationTree")
+@onready var playback = animation_tree.get("parameters/playback")
 @onready var player_mesh = get_node("Knight")
 
 @export var gravity: float = 9.8
@@ -46,28 +48,24 @@ func _input(event: InputEvent) -> void:
 		direction = camrot_h.global_transform.basis.z
 
 
-# Added by Baldur #
-@onready var state_machine: AnimationNodeStateMachinePlayback = $Knight/AnimationTree["parameters/playback"]
-
-var instant_jump: bool = true 
-###################
-
-
 func _physics_process(delta: float) -> void:
 	var on_floor = is_on_floor()
-	instant_jump = true # Added by Baldur #
 	
 	if !is_dying:
+		attack1()
 		if !on_floor:
 			vertical_velocity += Vector3.DOWN*gravity*2*delta
 		else:
 			vertical_velocity = Vector3.DOWN*gravity/10
 		if Input.is_action_just_pressed("jump") and (!is_attacking) and on_floor:
 			vertical_velocity = Vector3.UP * jump_force
-			instant_jump = false # Added by Baldur #
 		angular_acceleration = 10
 		movement_speed = 0
 		acceleration = 15
+		if (attack1_node_name in playback.get_current_node()):
+			is_attacking = true
+		else:
+			is_attacking = false
 		var h_rot = camrot_h.global_transform.basis.get_euler().y
 		if (Input.is_action_pressed("forward") or Input.is_action_pressed("backward") or Input.is_action_pressed("left") or Input.is_action_pressed("right")):
 			direction = Vector3(Input.get_action_strength("left") - Input.get_action_strength("right"),
@@ -93,38 +91,20 @@ func _physics_process(delta: float) -> void:
 			horizontal_velocity = horizontal_velocity.lerp(direction.normalized()*0.01, acceleration * delta)
 		else:
 			horizontal_velocity = horizontal_velocity.lerp(direction.normalized()*movement_speed, acceleration * delta)
-		
-		
-		
-		# Added by Baldur #
-		if not on_floor:
-			jump(instant_jump)
-		elif horizontal_velocity != Vector3.ZERO:
-			run()
-		else:
-			idle()
-		###################
-		
-		
-		
 		velocity.z = horizontal_velocity.z + vertical_velocity.z
 		velocity.x = horizontal_velocity.x + vertical_velocity.x
 		velocity.y = vertical_velocity.y
 		move_and_slide()
-	horizontal_velocity = Vector3.ZERO
-
-func idle() -> void:
-	if state_machine.get_current_node() != "Idle":
-		state_machine.travel("Idle")
+	animation_tree["parameters/conditions/IsOnFloor"] = on_floor
+	animation_tree["parameters/conditions/IsInAir"] = !on_floor
+	animation_tree["parameters/conditions/IsWalking"] = is_walking
+	animation_tree["parameters/conditions/IsNotWalking"] = !is_walking
+	animation_tree["parameters/conditions/IsRunning"] = is_running
+	animation_tree["parameters/conditions/IsNotRunning"] = !is_running
+	animation_tree["parameters/conditions/is_dying"] = is_dying
 	
-func run() -> void:
-	if state_machine.get_current_node() != "Run":
-		state_machine.travel("Run")
-	
-func jump(instant: bool) -> void:
-	print(state_machine.get_fading_from_node())
-	if state_machine.get_current_node() != "Jump" or state_machine.get_current_node() != "Jump_Start":
-		if instant:
-			state_machine.start("Jump")
-		else:
-			state_machine.travel("Jump")
+func attack1():
+	if (idle_node_name in playback.get_current_node()) or (walk_node_name in playback.get_current_node()) or (run_node_name in playback.get_current_node()):
+		if Input.is_action_just_pressed("attack"):
+			if !is_attacking:
+				playback.travel(attack1_node_name)

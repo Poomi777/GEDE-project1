@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=4 uid="uid://dxs7kkm7gvtbs"]
+[gd_scene load_steps=131 format=4 uid="uid://dxs7kkm7gvtbs"]
 
 [ext_resource type="Script" path="res://Scripts/player/player.gd" id="1_0csjv"]
 [ext_resource type="Texture2D" uid="uid://bm18of170jk5t" path="res://Assets/KayKit_Adventurers_1.0_FREE/KayKit_Adventurers_1.0_FREE/Characters/gltf/Knight_knight_texture.png" id="1_mhr4w"]
@@ -29581,6 +29581,7 @@ tracks/56/keys = PackedFloat32Array(0, 1, 0.758253, 2.06327e-07, -0.651961, 2.64
 [sub_resource type="Animation" id="Animation_fyuis"]
 resource_name = "Walking_A"
 length = 1.06667
+loop_mode = 1
 tracks/0/type = "position_3d"
 tracks/0/imported = true
 tracks/0/enabled = true
@@ -31270,62 +31271,108 @@ _data = {
 "Walking_C": SubResource("Animation_ulm8j")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c2w5x"]
-animation = &"Idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yi1t8"]
-animation = &"Jump_Idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0jeik"]
-animation = &"Jump_Start"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_07eva"]
-animation = &"Jump_Land"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5v7wb"]
-animation = &"Running_A"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1t1me"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_t4uvx"]
-xfade_time = 0.5
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gedli"]
-xfade_time = 0.5
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5pylr"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_l4w0f"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qmk7t"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bxosj"]
-xfade_time = 0.1
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6ay5y"]
-xfade_time = 0.1
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0lmry"]
-states/Idle/node = SubResource("AnimationNodeAnimation_c2w5x")
-states/Idle/position = Vector2(397, 99)
-states/Jump/node = SubResource("AnimationNodeAnimation_yi1t8")
-states/Jump/position = Vector2(437, -59)
-states/Jump_Start/node = SubResource("AnimationNodeAnimation_0jeik")
-states/Jump_Start/position = Vector2(350, 2)
-states/Land/node = SubResource("AnimationNodeAnimation_07eva")
-states/Land/position = Vector2(555, 13)
-states/Run/node = SubResource("AnimationNodeAnimation_5v7wb")
-states/Run/position = Vector2(585, 100)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_1t1me"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_t4uvx"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_gedli"), "Idle", "Jump_Start", SubResource("AnimationNodeStateMachineTransition_5pylr"), "Run", "Jump_Start", SubResource("AnimationNodeStateMachineTransition_l4w0f"), "Jump_Start", "Jump", SubResource("AnimationNodeStateMachineTransition_qmk7t"), "Jump", "Land", SubResource("AnimationNodeStateMachineTransition_bxosj"), "Land", "Idle", SubResource("AnimationNodeStateMachineTransition_6ay5y")]
-graph_offset = Vector2(17, -106)
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5n4hg"]
 radius = 0.356757
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5wbpo"]
+animation = &"2H_Melee_Attack_Spinning"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_udyp1"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_hqe0n"]
+graph_offset = Vector2(-333.881, 31.6514)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_5wbpo")
+nodes/Animation/position = Vector2(-120, 120)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_udyp1")
+nodes/TimeScale/position = Vector2(320, 120)
+nodes/output/position = Vector2(560, 120)
+node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lneeu"]
+animation = &"Death_A"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t51xu"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u510i"]
+animation = &"Jump_Full_Long"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hb44b"]
+animation = &"Running_A"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g7i11"]
+animation = &"Walking_A"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dwaem"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_151ve"]
+advance_mode = 2
+advance_condition = &"IsWalking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_feoau"]
+advance_mode = 2
+advance_condition = &"IsRunning"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qfcb8"]
+advance_mode = 2
+advance_condition = &"IsInAir"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ew7tg"]
+advance_mode = 2
+advance_condition = &"IsInAir"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ao1yi"]
+advance_mode = 2
+advance_condition = &"IsOnFloor"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oewig"]
+advance_mode = 2
+advance_condition = &"IsInAir"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_j2kia"]
+advance_mode = 2
+advance_condition = &"is_dying"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_olhvg"]
+advance_mode = 2
+advance_condition = &"is_dying"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0grr4"]
+advance_mode = 2
+advance_condition = &"is_dying"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7fyd8"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_y5rgm"]
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"IsOnFloor"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pjjwh"]
+advance_mode = 2
+advance_condition = &"IsNotRunning"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mm8de"]
+advance_mode = 2
+advance_condition = &"IsNotWalking"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_1agf5"]
+states/Attack1/node = SubResource("AnimationNodeBlendTree_hqe0n")
+states/Attack1/position = Vector2(384, -14)
+states/Death/node = SubResource("AnimationNodeAnimation_lneeu")
+states/Death/position = Vector2(807, -22)
+states/End/position = Vector2(963, 88)
+states/Idle/node = SubResource("AnimationNodeAnimation_t51xu")
+states/Idle/position = Vector2(384, 103)
+states/Jump/node = SubResource("AnimationNodeAnimation_u510i")
+states/Jump/position = Vector2(588, 212)
+states/Run/node = SubResource("AnimationNodeAnimation_hb44b")
+states/Run/position = Vector2(807, 88)
+states/Walk/node = SubResource("AnimationNodeAnimation_g7i11")
+states/Walk/position = Vector2(588, 103)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_dwaem"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_151ve"), "Walk", "Run", SubResource("AnimationNodeStateMachineTransition_feoau"), "Run", "Jump", SubResource("AnimationNodeStateMachineTransition_qfcb8"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_ew7tg"), "Jump", "Walk", SubResource("AnimationNodeStateMachineTransition_ao1yi"), "Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_oewig"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_j2kia"), "Run", "Death", SubResource("AnimationNodeStateMachineTransition_olhvg"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_0grr4"), "Idle", "Attack1", SubResource("AnimationNodeStateMachineTransition_7fyd8"), "Attack1", "Idle", SubResource("AnimationNodeStateMachineTransition_y5rgm"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_pjjwh"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_mm8de")]
+graph_offset = Vector2(62, -38)
 
 [node name="player" type="CharacterBody3D"]
 script = ExtResource("1_0csjv")
@@ -31687,7 +31734,8 @@ bones/49/rotation = Quaternion(0.758253, 1.82539e-07, -0.651961, 1.11759e-08)
 bones/49/scale = Vector3(1, 1, 1)
 
 [node name="1H_Sword_Offhand" type="BoneAttachment3D" parent="Knight/Rig/Skeleton3D"]
-transform = Transform3D(-1.05827e-06, 0.262868, 0.964831, 0.999874, -0.0152918, 0.00416826, 0.0158501, 0.96471, -0.262834, 0.511747, 0.616449, -0.0020831)
+transform = Transform3D(6.99986e-08, 0.178683, 0.983906, 0.99863, -0.0514762, 0.0093492, 0.0523187, 0.982558, -0.178438, 0.524466, 0.58831, -0.095403)
+visible = false
 bone_name = "1H_Sword_Offhand"
 bone_idx = 9
 
@@ -31696,7 +31744,8 @@ mesh = SubResource("ArrayMesh_r47xq")
 skeleton = NodePath("")
 
 [node name="Badge_Shield" type="BoneAttachment3D" parent="Knight/Rig/Skeleton3D"]
-transform = Transform3D(-1.03584e-06, 0.262868, 0.964831, 0.999874, -0.0152943, 0.00416892, 0.0158527, 0.96471, -0.262834, 0.662149, 0.617098, -0.043055)
+transform = Transform3D(-1.33727e-07, 0.178683, 0.983906, 0.99863, -0.0514787, 0.00934985, 0.0523214, 0.982558, -0.178437, 0.677842, 0.589767, -0.123219)
+visible = false
 bone_name = "Badge_Shield"
 bone_idx = 10
 
@@ -31705,7 +31754,8 @@ mesh = SubResource("ArrayMesh_i4kib")
 skeleton = NodePath("")
 
 [node name="Rectangle_Shield" type="BoneAttachment3D" parent="Knight/Rig/Skeleton3D"]
-transform = Transform3D(-1.03584e-06, 0.262868, 0.964831, 0.999874, -0.0152943, 0.00416892, 0.0158527, 0.96471, -0.262834, 0.662149, 0.617098, -0.043055)
+transform = Transform3D(-1.33727e-07, 0.178683, 0.983906, 0.99863, -0.0514787, 0.00934985, 0.0523214, 0.982558, -0.178437, 0.677842, 0.589767, -0.123219)
+visible = false
 bone_name = "Rectangle_Shield"
 bone_idx = 11
 
@@ -31714,7 +31764,8 @@ mesh = SubResource("ArrayMesh_80x0v")
 skeleton = NodePath("")
 
 [node name="Round_Shield" type="BoneAttachment3D" parent="Knight/Rig/Skeleton3D"]
-transform = Transform3D(-1.03584e-06, 0.262868, 0.964831, 0.999874, -0.0152943, 0.00416892, 0.0158527, 0.96471, -0.262834, 0.662149, 0.617098, -0.043055)
+transform = Transform3D(-1.33727e-07, 0.178683, 0.983906, 0.99863, -0.0514787, 0.00934985, 0.0523214, 0.982558, -0.178437, 0.677842, 0.589767, -0.123219)
+visible = false
 bone_name = "Round_Shield"
 bone_idx = 12
 
@@ -31723,7 +31774,8 @@ mesh = SubResource("ArrayMesh_ypc7b")
 skeleton = NodePath("")
 
 [node name="Spike_Shield" type="BoneAttachment3D" parent="Knight/Rig/Skeleton3D"]
-transform = Transform3D(-1.03584e-06, 0.262868, 0.964831, 0.999874, -0.0152943, 0.00416892, 0.0158527, 0.96471, -0.262834, 0.662149, 0.617098, -0.043055)
+transform = Transform3D(-1.33727e-07, 0.178683, 0.983906, 0.99863, -0.0514787, 0.00934985, 0.0523214, 0.982558, -0.178437, 0.677842, 0.589767, -0.123219)
+visible = false
 bone_name = "Spike_Shield"
 bone_idx = 13
 
@@ -31732,7 +31784,8 @@ mesh = SubResource("ArrayMesh_nbqol")
 skeleton = NodePath("")
 
 [node name="1H_Sword" type="BoneAttachment3D" parent="Knight/Rig/Skeleton3D"]
-transform = Transform3D(-0.00312727, -0.163327, 0.986567, 0.999915, -0.0129633, 0.00102254, 0.0126225, 0.986486, 0.163353, -0.495978, 0.620615, 0.139499)
+transform = Transform3D(-3.30486e-07, -0.234597, 0.972092, 0.99863, -0.0508586, -0.0122745, 0.0523192, 0.97076, 0.234275, -0.492285, 0.589795, -0.041093)
+visible = false
 bone_name = "1H_Sword"
 bone_idx = 19
 
@@ -31741,7 +31794,7 @@ mesh = SubResource("ArrayMesh_3gtwf")
 skeleton = NodePath("")
 
 [node name="2H_Sword" type="BoneAttachment3D" parent="Knight/Rig/Skeleton3D"]
-transform = Transform3D(-0.00312728, -0.163327, 0.986567, 0.999915, -0.0129633, 0.00102255, 0.0126225, 0.986486, 0.163353, -0.495978, 0.620615, 0.139499)
+transform = Transform3D(-3.47246e-07, -0.234597, 0.972092, 0.99863, -0.0508586, -0.0122744, 0.0523192, 0.97076, 0.234275, -0.492285, 0.589795, -0.041093)
 bone_name = "2H_Sword"
 bone_idx = 20
 
@@ -31750,7 +31803,7 @@ mesh = SubResource("ArrayMesh_u5d65")
 skeleton = NodePath("")
 
 [node name="Knight_Helmet" type="BoneAttachment3D" parent="Knight/Rig/Skeleton3D"]
-transform = Transform3D(0.99972, -1.40145e-09, 0.0236468, 1.39343e-09, 1, 3.55687e-10, -0.0236468, -3.22638e-10, 0.99972, 4.69869e-07, 1.18108, -1.19779e-07)
+transform = Transform3D(0.998035, 3.76202e-09, -0.0626526, -0.00327785, 0.99863, -0.0522151, 0.0625668, 0.0523179, 0.996669, 0.013953, 1.15532, -0.107829)
 bone_name = "Knight_Helmet"
 bone_idx = 22
 
@@ -31759,7 +31812,7 @@ mesh = SubResource("ArrayMesh_gjuio")
 skeleton = NodePath("")
 
 [node name="Knight_Cape" type="BoneAttachment3D" parent="Knight/Rig/Skeleton3D"]
-transform = Transform3D(0.996275, -5.14962e-09, 0.0862354, 5.13044e-09, 1, 4.44078e-10, -0.0862354, 1.46374e-15, 0.996275, -1.63022e-08, 1.18108, -1.40136e-07)
+transform = Transform3D(1, -9.76996e-15, 7.45102e-09, 3.89832e-10, 0.99863, -0.0523179, -7.44083e-09, 0.0523179, 0.99863, 0.0139526, 1.15532, -0.107829)
 bone_name = "Knight_Cape"
 bone_idx = 23
 
@@ -31792,6 +31845,7 @@ mesh = SubResource("ArrayMesh_b7e8e")
 skin = SubResource("Skin_xs5m0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Knight"]
+root_motion_track = NodePath("Rig/Skeleton3D:hips")
 libraries = {
 "": SubResource("AnimationLibrary_dcm2s")
 }
@@ -31819,3 +31873,17 @@ spring_length = -5.0
 
 [node name="Camera3D" type="Camera3D" parent="camroot/h/v"]
 transform = Transform3D(-1, 1.51808e-08, -8.60946e-08, 0, 0.984808, 0.173648, 8.74228e-08, 0.173648, -0.984808, 0, 0, 0)
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../Knight")
+root_motion_track = NodePath("Rig/Skeleton3D:hips")
+tree_root = SubResource("AnimationNodeStateMachine_1agf5")
+anim_player = NodePath("../Knight/AnimationPlayer")
+parameters/conditions/IsInAir = false
+parameters/conditions/IsNotRunning = false
+parameters/conditions/IsNotWalking = false
+parameters/conditions/IsOnFloor = false
+parameters/conditions/IsRunning = false
+parameters/conditions/IsWalking = false
+parameters/conditions/is_dying = false
+parameters/Attack1/TimeScale/scale = 1.93
