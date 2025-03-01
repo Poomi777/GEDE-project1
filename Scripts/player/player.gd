@@ -6,6 +6,7 @@ extends CharacterBody3D
 @export var jump_force: int = 9
 @export var walk_speed: int = 3
 @export var run_speed: int = 10
+@onready var companion_target_position: Node3D = $Knight/CompanionTargetPosition
 
 #animation node names
 var idle_node_name: String = "Idle"
