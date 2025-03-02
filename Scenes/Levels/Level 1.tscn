@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cnvxtyc3jv8fi"]
+[gd_scene load_steps=8 format=3 uid="uid://cnvxtyc3jv8fi"]
 
 [ext_resource type="MeshLibrary" uid="uid://ciqs7pm16vrec" path="res://Scenes/Levels/library.tres" id="1_bqnr6"]
 [ext_resource type="PackedScene" uid="uid://dxs7kkm7gvtbs" path="res://Scenes/Player/player.tscn" id="2_d1tu3"]
-[ext_resource type="PackedScene" uid="uid://deauricxb3m42" path="res://Scenes/Monsters/skeleton_warrior_monster.tscn" id="3_k6gbm"]
 [ext_resource type="PackedScene" uid="uid://dmis5busbgef7" path="res://Scenes/Wolf/Wolf.tscn" id="3_dhtng"]
+[ext_resource type="PackedScene" uid="uid://deauricxb3m42" path="res://Scenes/Monsters/skeleton_warrior_monster.tscn" id="3_k6gbm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i1ox3"]
 
@@ -34,7 +34,9 @@ environment = SubResource("Environment_wh52w")
 [node name="player" parent="." instance=ExtResource("2_d1tu3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.409082, 1.05, -12.6215)
 
-[node name="skeleton_warrior_monster" parent="." instance=ExtResource("3_k6gbm")]
+[node name="skeleton_warrior_monster" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_k6gbm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1, -12)
+player = NodePath("../player")
+
 [node name="Wolf" parent="." instance=ExtResource("3_dhtng")]
 transform = Transform3D(-0.00829024, 0, 0.999966, 0, 1, 0, -0.999966, 0, -0.00829024, -1.43147, 1.05352, -13.8246)
