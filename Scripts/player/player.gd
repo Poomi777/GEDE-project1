@@ -16,6 +16,7 @@ var walk_node_name: String = "Walk"
 var run_node_name: String = "Run"
 var jump_node_name: String = "Jump"
 var attack1_node_name: String = "Attack1"
+var attack_animations = ["Attack1", "Attack2", "Attack3"]
 var death_node_name: String = "Death"
 
 #State Machine Conditions
@@ -109,6 +110,10 @@ func attack1():
 		if Input.is_action_just_pressed("attack"):
 			if !is_attacking:
 				playback.travel(attack1_node_name)
+		
+		if Input.is_action_just_pressed("random_attack"):
+			var random_attack = attack_animations[randi() % attack_animations.size()]
+			playback.travel(random_attack)
 
 
 func _on_damage_detector_body_entered(body: Node3D) -> void:
