@@ -37,6 +37,7 @@ var just_hit: bool
 
 @onready var camrot_h = get_node("camroot/h")
 
+var health: int = 5
 func _ready() -> void:
 	pass
 
@@ -108,3 +109,29 @@ func attack1():
 		if Input.is_action_just_pressed("attack"):
 			if !is_attacking:
 				playback.travel(attack1_node_name)
+
+
+func _on_damage_detector_body_entered(body: Node3D) -> void:
+	if body.is_in_group("monster") and is_attacking:
+		body.hit(2)
+
+func hit(damage: int):
+	if !just_hit:
+		just_hit = true
+		get_node("just_hit").start()
+		health -= damage
+		if health < 0:
+			is_dying = true
+			playback.travel(death_node_name)
+		#knockback
+		var tween = create_tween()
+		tween.tween_property(self, "global_position", global_position - (direction/1.5), 0.2)
+
+
+func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
+	if "Death" in anim_name:
+		self.queue_free()
+
+
+func _on_just_hit_timeout() -> void:
+	just_hit = false
