@@ -8,10 +8,6 @@ const SPEED = 8
 const ACCELERATION = 15
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-		
 	var direction: Vector3 = global_position.direction_to(player.companion_target_position.global_position)
 	direction.y = 0
 	look_at(position + direction)
@@ -21,6 +17,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity = Vector3.ZERO
 		idle()
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
 	move_and_slide()
 
 func run() -> void:
